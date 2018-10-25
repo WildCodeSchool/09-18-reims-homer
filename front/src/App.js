@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import SignUp from "./SignUp";
 
@@ -7,21 +6,33 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      email: ""
+      email: "mon@email.com",
+      password: "monPassw0rd",
+      passwordbis: "passwordBis",
+      name: "James",
+      lastname: "Bond"
     };
-    this.updateEmailField = this.updateEmailField.bind(this);
+    this.updateField = this.updateField.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
-  updateEmailField(event) {
+  updateField(event) {
+    let inputName = event.target.name;
     this.setState({
-      email: event.target.value
+      [inputName]: event.target.value
     });
   }
+  handleSubmit(event) {
+    event.preventDefault();
+    console.log(this.state);
+  }
+
   render() {
     return (
       <div className="App">
         <SignUp
-          updateEmailField={this.updateEmailField}
-          email={this.state.email}
+          updateField={this.updateField}
+          state={this.state}
+          handleSubmit={this.handleSubmit}
         />
       </div>
     );
