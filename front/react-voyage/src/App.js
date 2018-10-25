@@ -6,12 +6,20 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "test@test.com"
+      email: "test@test.com",
+      password: "",
+      passwordbis: "",
+      name: "",
+      lastname: ""
     };
     this.handleInputChange = this.handleInputChange.bind(this)
   }
   handleInputChange = (event) => {
-    this.setState({ email: event.target.value })
+    this.setState({ [event.target.name]: event.target.value })
+  };
+  handleSubmit = (event) => {
+    event.preventDefault();
+    console.log(JSON.stringify(this.state, 1, 1))
   };
 
 
@@ -19,7 +27,9 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <SignUp email={this.state.email} handleInputChange={this.handleInputChange} />
+        <SignUp state={this.state}
+          handleInputChange={this.handleInputChange}
+          handleSubmit={this.handleSubmit} />
       </div>
     );
   }
