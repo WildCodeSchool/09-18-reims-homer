@@ -7,20 +7,31 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      email: ""
+      email: "",
+      password: "",
+      passwordBis: "",
+      name: "",
+      lastname: ""
     };
-    this.updateEmailField = this.updateEmailField.bind(this);
+    this.updateField = this.updateField.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  updateEmailField(event) {
-    this.setState({ email: event.target.value });
+  updateField(event) {
+    this.setState({ [event.target.name]: event.target.value });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    console.log(this.state);
   }
   render() {
     return (
       <div className="App">
         <SignUp
-          updateEmailField={this.updateEmailField}
-          email={this.state.email}
+          updateField={this.updateField}
+          account={this.state}
+          handleSubmit={this.handleSubmit}
         />
       </div>
     );
