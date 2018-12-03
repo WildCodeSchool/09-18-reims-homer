@@ -4,7 +4,6 @@ const express = require("express");
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const app = express();
-
 const authRouter = require("./routes/auth/auth")
 
 app.use(morgan('dev'));
