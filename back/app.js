@@ -12,8 +12,8 @@ app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static(__dirname + "/public"));
-app.use("/auth", authRouter);
 
+app.use("/auth", authRouter);
 // j'implémente la partie API
 app.get("/", (req, res) => {
   res.send("youhou");
