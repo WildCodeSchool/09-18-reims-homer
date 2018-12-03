@@ -36,15 +36,15 @@ class SignUp extends Component {
               onChange={event => updateField(event)}
               type="text"
               name="name"
-              placeholder="Votre Nom"
+              placeholder="Votre prénom"
             />
           </p>
           <p>
             <input
               onChange={event => updateField(event)}
               type="text"
-              name="firstname"
-              placeholder="Votre prénom"
+              name="lastname"
+              placeholder="Votre nom"
             />
           </p>
           <input type="submit" value="Soumettre" />
