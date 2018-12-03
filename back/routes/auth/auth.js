@@ -11,9 +11,9 @@ router.post("/signup", (req, res, next) => {
   console.log(dataFrom);
   connection.query("INSERT INTO users SET ?", dataFrom, err => {
     if (err) {
-      console.log("erreur bdd");
+      res.status(500).send(err);
     } else {
-      res.send("I am in POST signup");
+      res.sendStatus(200);
     }
   });
 });
