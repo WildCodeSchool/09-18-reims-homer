@@ -1,15 +1,16 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import Email from "./SignUp";
+import { Container } from "reactstrap";
 
 class App extends Component {
   render() {
     return (
-      <div>
-        <header>Homer Odyssey</header>
+      <Container>
+        <header className="text-center">Homer Odyssey</header>
+
         <Email />
-      </div>
+      </Container>
     );
   }
 }
