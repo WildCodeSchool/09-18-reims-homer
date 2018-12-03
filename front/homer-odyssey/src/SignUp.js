@@ -55,7 +55,7 @@ class SignUp extends Component {
         />
         <input
           type="password"
-          name="password"
+          name="passwordBis"
           onChange={this.updatePasswordBisField}
         />
         <input type="email" name="email" onChange={this.updateEmailField} />
