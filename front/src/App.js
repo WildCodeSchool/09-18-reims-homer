@@ -11,7 +11,8 @@ class App extends Component {
       password: "",
       passwordBis: "",
       name: "",
-      lastname: ""
+      lastname: "",
+      flash: ""
     };
     this.updateField = this.updateField.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -23,7 +24,21 @@ class App extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log(this.state);
+    fetch("/auth/signup", {
+      method: "POST",
+      headers: new Headers({ "Content-Type": "application/json" }),
+      body: JSON.stringify({
+        email: this.state.email,
+        password: this.state.password,
+        name: this.state.name,
+        lastname: this.state.lastname
+      })
+    })
+      .then(res => res.json())
+      .then(
+        res => this.setState({ flash: res.flash }),
+        err => this.setState({ flash: err.flash })
+      );
   }
   render() {
     return (

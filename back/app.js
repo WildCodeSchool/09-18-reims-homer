@@ -1,6 +1,7 @@
 // je déclare l'ensemble des librairies nécessaires
 const http = require("http");
 const path = require("path");
+const cors = require("cors");
 const express = require("express");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
@@ -12,6 +13,8 @@ app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static(__dirname + "/public"));
+
+app.use(cors());
 
 app.use("/auth", authRouter);
 // j'implémente la partie API
@@ -27,6 +30,6 @@ app.use((req, res, next) => {
 });
 
 //je lance le serveur node
-let server = app.listen(process.env.PORT || 3000, () => {
+let server = app.listen(process.env.PORT || 5000, () => {
   console.log("Listening on port " + server.address().port);
 });
