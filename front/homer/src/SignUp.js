@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+import React from "react";
 
-class Email extends Component {
+class SignUp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -13,15 +13,15 @@ class Email extends Component {
   updateEmailField = event => {
     this.setState({ email: event.target.value });
   };
-
   render() {
     return (
       <div>
-        <h1>{this.state.email}</h1>
+        {" "}
+        <h1>test@test.com</h1>
         <input type="email" name="email" onChange={this.updateEmailField} />
       </div>
     );
   }
 }
 
-export default Email;
+export default SignUp;
