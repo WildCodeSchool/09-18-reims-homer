@@ -10,7 +10,8 @@ class App extends Component {
       password: "",
       passwordbis: "",
       name: "",
-      lastname: ""
+      lastname: "",
+      flash: ""
     };
     this.handleInputChange = this.handleInputChange.bind(this)
   }
@@ -19,7 +20,19 @@ class App extends Component {
   };
   handleSubmit = (event) => {
     event.preventDefault();
-    console.log(JSON.stringify(this.state, 1, 1))
+    fetch("/auth/signup",
+      {
+        method: 'POST',
+        headers: new Headers({
+          'Content-Type': 'application/json'
+        }),
+        body: JSON.stringify(this.state),
+      })
+      .then(res => res.json())
+      .then(
+        res => this.setState({ flash: res.flash }),
+        err => this.setState({ flash: err.flash })
+      )
   };
 
 

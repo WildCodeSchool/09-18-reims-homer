@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 
 class SignUp extends Component {
 
+
   render() {
     const { state, handleInputChange, handleSubmit } = { ...this.props }
     return (
@@ -16,6 +17,7 @@ class SignUp extends Component {
           <input onChange={((event) => handleInputChange(event))} type="text" name="lastname" />
           <input type="submit" value="Soumettre" />
         </form>
+        <p>{state.flash}</p>
       </Fragment>
     );
   }
