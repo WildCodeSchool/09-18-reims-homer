@@ -4,11 +4,11 @@ class SignUp extends Component {
   constructor() {
     super();
     this.state = {
-      email: "",
-      password: "",
-      passwordbis: "",
-      name: "",
-      lastname: ""
+      email: "mon@email.com",
+      password: "monPassw0rd",
+      passwordbis: "monPassw0rd",
+      name: "James",
+      lastname: "Bond"
     };
     this.updateEmailField = this.updateEmailField.bind(this);
     this.updatePassword = this.updatePassword.bind(this);
