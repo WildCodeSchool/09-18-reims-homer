@@ -4,66 +4,79 @@ class SignUp extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "mon@email.com",
-      password: "monPassw0rd",
-      passwordbis: "monPassw0rdBis",
-      firstname: "James",
-      lastname: "Bond"
+      auth: {
+        email: "mon@email.com",
+        password: "monPassw0rd",
+        firstname: "James",
+        lastname: "Bond"
+      },
+      flash: "fail"
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   onChangeUpdateEmailField(event) {
-    this.setState({ email: event.target.value });
+    this.setState({ auth: { ...this.state.auth, email: event.target.value } });
   }
   onChangeUpdatePasswordField(event) {
-    this.setState({ password: event.target.value });
-  }
-  onChangeUpdatePasswordbisField(event) {
-    this.setState({ passwordbis: event.target.value });
+    this.setState({
+      auth: { ...this.state.auth, password: event.target.value }
+    });
   }
   onChangeUpdateFirstnameField(event) {
-    this.setState({ firstname: event.target.value });
+    this.setState({
+      auth: { ...this.state.auth, firstname: event.target.value }
+    });
   }
   onChangeUpdateLastnameField(event) {
-    this.setState({ lastname: event.target.value });
+    this.setState({
+      auth: { ...this.state.auth, lastname: event.target.value }
+    });
   }
 
   handleSubmit(event) {
-    console.log("A name was submitted: " + JSON.stringify(this.state, 1, 1));
+    console.log(
+      "A name was submitted: " + JSON.stringify(this.state.auth, 1, 1)
+    );
     event.preventDefault();
+    fetch("/auth/signup", {
+      method: "POST",
+      headers: new Headers({
+        "Content-Type": "application/json"
+      }),
+      body: JSON.stringify(this.state.auth)
+    })
+      .then(res => res.json())
+      .then(
+        res => this.setState({ flash: res.flash }),
+        err => this.setState({ flash: err.flash })
+      );
   }
 
   render() {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <h1>Email: {this.state.email}</h1>
+          <h1>Email: {this.state.auth.email}</h1>
           <input
             onChange={this.onChangeUpdateEmailField.bind(this)}
             type="email"
             name="email"
           />
-          <h1>Password: {this.state.password}</h1>
+          <h1>Password: {this.state.auth.password}</h1>
           <input
             onChange={this.onChangeUpdatePasswordField.bind(this)}
             type="password"
             name="password"
           />
-          <h1>Repeat password: {this.state.passwordbis}</h1>
-          <input
-            onChange={this.onChangeUpdatePasswordbisField.bind(this)}
-            type="password"
-            name="password"
-          />
-          <h1>Firstname: {this.state.firstname}</h1>
+          <h1>Firstname: {this.state.auth.firstname}</h1>
           <input
             onChange={this.onChangeUpdateFirstnameField.bind(this)}
             type="text"
             name="text"
           />
-          <h1>Lastname: {this.state.lastname}</h1>
+          <h1>Lastname: {this.state.auth.lastname}</h1>
           <input
             onChange={this.onChangeUpdateLastnameField.bind(this)}
             type="text"

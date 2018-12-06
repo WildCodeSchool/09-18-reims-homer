@@ -11,7 +11,7 @@ router.post("/signup", function(req, res, next) {
       if (error) {
         res.status(500).json({ flash: error.message });
       }
-      res.status(200).json({ flash: "You are signed up !" });
+      res.status(200).json({ flash: "User has been signed up !" });
     }
   );
 });
