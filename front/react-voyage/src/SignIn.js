@@ -5,16 +5,13 @@ import { Link } from "react-router-dom"
 
 import "./App.css"
 
-class SignUp extends Component {
+class SignIn extends Component {
   constructor(props) {
     super(props);
     this.state = {
       open: false,
       email: "test@test.com",
       password: "",
-      passwordbis: "",
-      name: "",
-      lastname: "",
       flash: ""
     };
     this.handleInputChange = this.handleInputChange.bind(this)
@@ -24,7 +21,7 @@ class SignUp extends Component {
   };
   handleSubmit = (event) => {
     event.preventDefault();
-    fetch("/auth/signup",
+    fetch("/auth/signin",
       {
         method: 'POST',
         headers: new Headers({
@@ -55,18 +52,18 @@ class SignUp extends Component {
 
     return (
       <Fragment>
+        <Link to="/signup">Signup</Link>
 
-        <Link to="/signin">Signin</Link>
-        <div> Sign Up </div>
+
+        <div> Sign In </div>
         {/* <h1>{JSON.stringify(state, 1, 1)}</h1> */}
         <form onSubmit={((event) => this.handleSubmit(event))}>
           <TextField label="Email" onChange={((event) => this.handleInputChange(event))} type="email" name="email" />
           <TextField label="Password" onChange={((event) => this.handleInputChange(event))} type="password" name="password" />
-          <TextField label="Password Bis" onChange={((event) => this.handleInputChange(event))} type="password" name="passwordbis" />
-          <TextField label="Name" onChange={((event) => this.handleInputChange(event))} type="text" name="name" />
-          <TextField label="LastName" onChange={((event) => this.handleInputChange(event))} type="text" name="lastname" />
           <br />
-          <Button onClick={this.handleClick} type="submit" value="Soumettre"><Link to="/">VALIDER</Link></Button>
+          <Button onClick={this.handleClick} type="submit" value="Soumettre"><Link to="/profile">Valider</Link></Button>
+
+
         </form>
 
         <Snackbar
@@ -82,9 +79,7 @@ class SignUp extends Component {
           }}
           message={<span id="message-id">{this.state.flash}</span>}
           action={[
-            <Button key="undo" color="secondary" size="small" onClick={this.handleClose}>
-              UNDO
-            </Button>,
+            ,
             <IconButton
               key="close"
               aria-label="Close"
@@ -102,4 +97,4 @@ class SignUp extends Component {
   }
 }
 
-export default SignUp
+export default SignIn
