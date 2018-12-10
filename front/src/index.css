@@ -15,3 +15,7 @@ body {
     background-color: #fcb571;
   }
 }
+
+a {
+  text-decoration: none;
+}
