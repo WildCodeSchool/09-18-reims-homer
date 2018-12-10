@@ -8,13 +8,15 @@ class SignUp extends Component {
       password: "monPassw0rd",
       passwordbis: "monPassw0rd",
       name: "James",
-      lastname: "Bond"
+      lastname: "Bond",
+      flash: ""
     };
     this.updateEmailField = this.updateEmailField.bind(this);
     this.updatePassword = this.updatePassword.bind(this);
     this.updatePasswordbis = this.updatePasswordbis.bind(this);
     this.updateName = this.updateName.bind(this);
     this.updateLastname = this.updateLastname.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   updateEmailField(event) {
@@ -39,6 +41,18 @@ class SignUp extends Component {
 
   handleSubmit(event) {
     console.log("A name was submitted: " + JSON.stringify(this.state, 1, 1));
+    fetch("/auth/signup", {
+      method: "POST",
+      headers: new Headers({
+        "Content-Type": "application/json"
+      }),
+      body: JSON.stringify(this.state)
+    })
+      .then(res => res.json())
+      .then(
+        res => this.setState({ flash: res.flash }),
+        err => this.setState({ flash: err.flash })
+      );
     event.preventDefault();
   }
   render() {
