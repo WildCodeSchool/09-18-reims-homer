@@ -1,4 +1,12 @@
 import React, { Component } from "react";
+import { Row } from "reactstrap";
+import PropTypes from "prop-types";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import Icon from "@material-ui/core/Icon";
+import styles from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
+import Snackbar from "@material-ui/core/Snackbar";
 
 class SignUp extends Component {
   constructor(props) {
@@ -58,36 +66,67 @@ class SignUp extends Component {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <h1>Email: {this.state.auth.email}</h1>
-          <input
-            onChange={this.onChangeUpdateEmailField.bind(this)}
-            type="email"
-            name="email"
-          />
-          <h1>Password: {this.state.auth.password}</h1>
-          <input
-            onChange={this.onChangeUpdatePasswordField.bind(this)}
-            type="password"
-            name="password"
-          />
-          <h1>Firstname: {this.state.auth.firstname}</h1>
-          <input
-            onChange={this.onChangeUpdateFirstnameField.bind(this)}
-            type="text"
-            name="text"
-          />
-          <h1>Lastname: {this.state.auth.lastname}</h1>
-          <input
-            onChange={this.onChangeUpdateLastnameField.bind(this)}
-            type="text"
-            name="text"
-          />
+          <Row>
+            <TextField
+              onChange={this.onChangeUpdateEmailField.bind(this)}
+              id="standard-email-input"
+              label="Email"
+              name="email"
+              type="email"
+              autoComplete="current-email"
+              margin="normal"
+            />
+          </Row>
+          <Row>
+            <TextField
+              onChange={this.onChangeUpdatePasswordField.bind(this)}
+              id="standard-password-input"
+              label="Password"
+              name="password"
+              type="password"
+              autoComplete="current-password"
+              margin="normal"
+            />
+          </Row>
+          <Row>
+            <TextField
+              onChange={this.onChangeUpdateFirstnameField.bind(this)}
+              id="standard-firstname-input"
+              label="Firstname"
+              name="firstname"
+              type="firstname"
+              autoComplete="current-firstname"
+              margin="normal"
+            />
+          </Row>
+          <Row>
+            <TextField
+              onChange={this.onChangeUpdateLastnameField.bind(this)}
+              id="standard-lastname-input"
+              label="Lastname"
+              name="lastname"
+              type="lastname"
+              autoComplete="current-lastname"
+              margin="normal"
+            />
+          </Row>
 
-          <input type="submit" value="Soumettre" />
+          <Button
+            variant="contained"
+            color="primary"
+            type="submit"
+            value="Soumettre"
+          >
+            <Icon className="fas fa-paper-plane">send</Icon>
+          </Button>
         </form>
       </div>
     );
   }
 }
 
-export default SignUp;
+SignUp.propTypes = {
+  classes: PropTypes.object.isRequired
+};
+
+export default withStyles(styles)(SignUp);
