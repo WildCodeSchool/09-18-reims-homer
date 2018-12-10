@@ -5,6 +5,30 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const app = express();
+const multer = require("multer");
+const upload = multer({ dest: "tmp/" });
+const fs = require("fs");
+
+app.post("/uploaddufichier", upload.array("monfichier", 3), function(
+  req,
+  res,
+  next
+) {
+  req.files.map(file =>
+    file.size < 3000000 && file.mimetype.split(".").includes("png")
+      ? fs.rename(file.path, "public/images/" + file.originalname, function(
+          err
+        ) {
+          if (err) {
+            console.log(err);
+            res.send("problème durant le déplacement");
+          } else {
+            res.send("Fichier uploadé avec succès");
+          }
+        })
+      : res.send("Fichier incorrect")
+  );
+});
 
 const authRouter = require("./routes/auth/auth");
 

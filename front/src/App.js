@@ -51,6 +51,14 @@ class App extends Component {
           state={this.state}
           handleSubmit={this.handleSubmit}
         />
+        <form
+          method="POST"
+          enctype="multipart/form-data"
+          action="uploaddufichier"
+        >
+          <input type="file" name="monfichier" multiple />
+          <button> envoyer </button>
+        </form>
       </div>
     );
   }
