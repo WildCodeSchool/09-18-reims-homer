@@ -3,7 +3,7 @@ import { TextField, Button, Snackbar, IconButton } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import { Link } from "react-router-dom";
 
-class SignUp extends Component {
+class SignIn extends Component {
   state = {
     open: false
   };
@@ -20,11 +20,7 @@ class SignUp extends Component {
     super(props);
     this.state = {
       email: "mon@email.com",
-      password: "monPassw0rd",
-      passwordbis: "monPassw0rd",
-      name: "James",
-      lastname: "Bond",
-      flash: ""
+      password: "monPassw0rd"
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -34,28 +30,17 @@ class SignUp extends Component {
   updatePasswordField(event) {
     this.setState({ password: event.target.value });
   }
-  updatePasswordbisField(event) {
-    this.setState({ passwordbis: event.target.value });
-  }
-  updateNameField(event) {
-    this.setState({ name: event.target.value });
-  }
-  updateLastnameField(event) {
-    this.setState({ lastname: event.target.value });
-  }
 
   handleSubmit(event) {
     console.log("A name was submitted: " + JSON.stringify(this.state, 1, 1));
-    fetch("/auth/signup", {
+    fetch("/auth/signin", {
       method: "POST",
       headers: new Headers({
         "Content-Type": "application/json"
       }),
       body: JSON.stringify({
         email: this.state.email,
-        password: this.state.password,
-        name: this.state.name,
-        lastname: this.state.lastname
+        password: this.state.password
       })
     })
       .then(res => res.json())
@@ -101,6 +86,7 @@ class SignUp extends Component {
               </IconButton>
             ]}
           />
+          <Link to="/signUp">Pas de compte ? Inscrit toi !</Link>
           <h3>E-mail</h3>
           <TextField
             onChange={this.updateEmailField.bind(this)}
@@ -114,28 +100,9 @@ class SignUp extends Component {
             type="password"
             name="password"
           />
-          <TextField
-            onChange={this.updatePasswordbisField.bind(this)}
-            type="password"
-            name="passwordbis"
-          />
-
-          <h3>Name</h3>
-          <TextField
-            onChange={this.updateNameField.bind(this)}
-            type="text"
-            name="name"
-          />
-
-          <h3>LastName</h3>
-          <TextField
-            onChange={this.updateLastnameField.bind(this)}
-            type="text"
-            name="lastname"
-          />
           <br />
           <br />
-          <Link to="/">
+          <Link to="/profile">
             <Button
               variant="contained"
               color="primary"
@@ -151,4 +118,4 @@ class SignUp extends Component {
   }
 }
 
-export default SignUp;
+export default SignIn;

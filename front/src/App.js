@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import { MuiThemeProvider, Grid, Paper } from "@material-ui/core";
+import { Route, Switch, BrowserRouter } from "react-router-dom";
 import "./App.css";
 import SignUp from "./SignUp";
+import SignIn from "./SignIn";
+import Profile from "./Profile";
 
 class App extends Component {
   render() {
@@ -18,8 +21,14 @@ class App extends Component {
                       alt="homer"
                     />
                   </Grid>
-                  <Grid item xs={12} sm={6} alignContent="center">
-                    <SignUp />
+                  <Grid item xs={12} sm={6}>
+                    <BrowserRouter>
+                      <Switch>
+                        <Route path="/signup" component={SignUp} />
+                        <Route path="/signin" component={SignIn} />
+                        <Route path="/profile" component={Profile} />
+                      </Switch>
+                    </BrowserRouter>
                   </Grid>
                 </Grid>
               </Paper>
