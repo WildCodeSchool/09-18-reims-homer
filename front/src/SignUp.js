@@ -1,55 +1,68 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
+import { TextField, Button, Snackbar } from "@material-ui/core";
 
 class SignUp extends Component {
   render() {
     const { updateField, state, handleSubmit } = { ...this.props };
     return (
-      <div>
-        <h1>{JSON.stringify(state, 1, 1)}</h1>
-        <form onSubmit={event => handleSubmit(event)}>
-          <p>
-            <input
-              onChange={event => updateField(event)}
-              type="email"
-              name="email"
-              placeholder="Votre email"
-            />
-          </p>
-          <p>
-            <input
-              onChange={event => updateField(event)}
-              type="password"
-              name="password"
-              placeholder="Votre mot de passe"
-            />
-          </p>
-          <p>
-            <input
-              onChange={event => updateField(event)}
-              type="password"
-              name="passwordbis"
-              placeholder="Retappez votre mot de passe"
-            />
-          </p>
-          <p>
-            <input
-              onChange={event => updateField(event)}
-              type="text"
-              name="name"
-              placeholder="Votre prénom"
-            />
-          </p>
-          <p>
-            <input
-              onChange={event => updateField(event)}
-              type="text"
-              name="lastname"
-              placeholder="Votre nom"
-            />
-          </p>
-          <input type="submit" value="Soumettre" />
+      <Fragment>
+        <form
+          style={{
+            margin: "0 auto",
+            width: "50%"
+          }}
+          onSubmit={event => handleSubmit(event)}
+        >
+          <h1>Sign Up!</h1>
+          <TextField
+            onChange={event => updateField(event)}
+            type="email"
+            name="email"
+            label="Email"
+            placeholder="Votre email"
+          />
+          <br />
+          <TextField
+            onChange={event => updateField(event)}
+            type="password"
+            name="password"
+            label="Password"
+            placeholder="Votre mot de passe"
+          />
+          <br />
+          <TextField
+            onChange={event => updateField(event)}
+            type="password"
+            name="passwordbis"
+            label="Password Bis"
+            placeholder="Retappez votre mot de passe"
+          />
+          <br />
+          <TextField
+            onChange={event => updateField(event)}
+            type="text"
+            name="name"
+            label="Prénom"
+            placeholder="Votre prénom"
+          />
+          <br />
+          <TextField
+            onChange={event => updateField(event)}
+            type="text"
+            name="lastname"
+            label="Nom"
+            placeholder="Votre nom"
+          />
+          <br />
+          <Button
+            onClick={event => handleSubmit(event)}
+            variant="contained"
+            color="primary"
+          >
+            Envoyer
+          </Button>
         </form>
-      </div>
+      </Fragment>
     );
   }
 }
