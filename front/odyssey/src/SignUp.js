@@ -18,7 +18,8 @@ class SignUp extends Component {
         firstname: "James",
         lastname: "Bond"
       },
-      flash: "fail"
+      flash: "Vous êtes inscrit !",
+      open: false
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -61,6 +62,18 @@ class SignUp extends Component {
         err => this.setState({ flash: err.flash })
       );
   }
+
+  handleClick = () => {
+    this.setState({
+      open: true
+    });
+  };
+
+  handleRequestClose = () => {
+    this.setState({
+      open: false
+    });
+  };
 
   render() {
     return (
@@ -119,6 +132,15 @@ class SignUp extends Component {
           >
             <Icon className="fas fa-paper-plane">send</Icon>
           </Button>
+          <Snackbar
+            open={this.state.open}
+            autoHideDuration={4000}
+            onRequestClose={this.handleRequestClose}
+            ContentProps={{
+              "aria-describedby": "message-id"
+            }}
+            message={<span id="message-id">{this.state.flash}</span>}
+          />
         </form>
       </div>
     );
