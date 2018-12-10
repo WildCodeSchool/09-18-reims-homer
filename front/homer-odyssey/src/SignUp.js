@@ -36,6 +36,23 @@ class SignUp extends Component {
     console.log(
       `A name has been submitted :${JSON.stringify(this.state, 1, 1)}`
     );
+    fetch("/auth/signup", {
+      method: "POST",
+      headers: new Headers({
+        "Content-Type": "application/json"
+      }),
+      body: JSON.stringify({
+        name: this.state.name,
+        lastname: this.state.lastname,
+        password: this.state.password,
+        email: this.state.email
+      })
+    })
+      .then(res => res.json())
+      .then(
+        res => this.setState({ flash: res.flash }),
+        err => this.setState({ flash: err.flash })
+      );
     event.preventDefault();
   }
   render() {
