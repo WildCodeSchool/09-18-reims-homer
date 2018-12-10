@@ -11,7 +11,7 @@ router.post("/signup", (req, res, next) => {
   console.log(dataForm);
   connection.query("INSERT INTO users SET ?", dataForm, err => {
     if (err) {
-      res.status(500).json({ flash: err.message });
+      res.status(500).json({ flash: "Problem during registration !" });
     } else {
       res.status(200).json({ flash: "User has been signed up !" });
     }

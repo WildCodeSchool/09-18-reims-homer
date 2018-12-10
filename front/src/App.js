@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import SignUp from "./SignUp";
 
 import "./App.css";
-import FormUploadImage from "./FormUploadImage";
+import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
+import FlashMessage from "./FlashMessage";
 
 class App extends Component {
   constructor() {
@@ -13,14 +15,20 @@ class App extends Component {
       passwordBis: "",
       name: "",
       lastname: "",
-      flash: ""
+      flash: "",
+      openFlash: false
     };
     this.updateField = this.updateField.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleCloseFlashMessage = this.handleCloseFlashMessage.bind(this);
   }
 
   updateField(event) {
     this.setState({ [event.target.name]: event.target.value });
+  }
+
+  handleCloseFlashMessage() {
+    this.setState({ flash: "", openFlash: false });
   }
 
   handleSubmit(event) {
@@ -37,20 +45,38 @@ class App extends Component {
     })
       .then(res => res.json())
       .then(
-        res => this.setState({ flash: res.flash }),
-        err => this.setState({ flash: err.flash })
+        res => this.setState({ flash: res.flash, openFlash: true }),
+        err => this.setState({ flash: err.flash, openFlash: true })
       );
   }
   render() {
     return (
-      <div className="App">
-        <SignUp
-          updateField={this.updateField}
-          account={this.state}
-          handleSubmit={this.handleSubmit}
+      <Grid container alignItems="center" style={{ height: "100%" }}>
+        <Grid item xs={12}>
+          <Paper elevation={4} style={{ margin: 32 }}>
+            <Grid container alignItems="center" justify="center">
+              <Grid item xs={12} sm={6} style={{ textAlign: "center" }}>
+                <img
+                  src="http://images.innoveduc.fr/react_odyssey_homer/wildhomer.png"
+                  alt="homer"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6} style={{ textAlign: "center" }}>
+                <SignUp
+                  updateField={this.updateField}
+                  account={this.state}
+                  handleSubmit={this.handleSubmit}
+                />
+              </Grid>
+            </Grid>
+          </Paper>
+        </Grid>
+        <FlashMessage
+          handleCloseFlashMessage={this.handleCloseFlashMessage}
+          flashMessage={this.state.flash}
+          openFlashMessage={this.state.openFlash}
         />
-        <FormUploadImage />
-      </div>
+      </Grid>
     );
   }
 }

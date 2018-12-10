@@ -1,41 +1,58 @@
 import React, { Component } from "react";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 
 class SignUp extends Component {
   render() {
-    const { updateField, account, handleSubmit } = { ...this.props };
+    const { updateField, handleSubmit } = { ...this.props };
     return (
       <div>
-        <h1>{JSON.stringify(account, 1, 1)}</h1>
-        <form onSubmit={event => handleSubmit(event)}>
-          <input
+        <h1>Sign Up</h1>
+        <form>
+          <TextField
             type="email"
             name="email"
             onChange={event => updateField(event)}
+            label="Email"
+            style={{ width: "80%" }}
           />
-          <input
+          <TextField
             type="password"
             name="password"
             onChange={event => updateField(event)}
+            label="Password"
+            style={{ width: "80%" }}
           />
 
-          <input
+          <TextField
             type="password"
             name="passwordBis"
             onChange={event => updateField(event)}
+            label="Password Copy"
+            style={{ width: "80%" }}
           />
 
-          <input
+          <TextField
             type="text"
             name="name"
             onChange={event => updateField(event)}
+            label="Name"
+            style={{ width: "80%" }}
           />
 
-          <input
+          <TextField
             type="text"
             name="lastname"
             onChange={event => updateField(event)}
+            label="Lastname"
+            style={{ width: "80%" }}
           />
-          <input type="submit" />
+          <Button
+            style={{ width: "50%" }}
+            onClick={event => handleSubmit(event)}
+          >
+            Sign Up
+          </Button>
         </form>
       </div>
     );
