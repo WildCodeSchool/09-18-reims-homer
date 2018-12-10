@@ -54,6 +54,18 @@ class SignUp extends Component {
       );
   }
 
+  sendPictures() {
+    fetch("/monupload", {
+      method: "POST",
+      headers: new Headers({
+        "Content-Type": "application/json"
+      })
+    }).then(
+      res => this.setState({ flash: res.flash }),
+      err => this.setState({ flash: err.flash })
+    );
+  }
+
   render() {
     const myJSON = JSON.stringify(this.state.auth, 1, 1);
     return (
@@ -69,6 +81,16 @@ class SignUp extends Component {
           <input onChange={this.updateLastname} type="text" />
           <br />
           <input type="submit" value="Soumettre" />
+        </form>
+        <form
+          method="POST"
+          enctype="multipart/form-data"
+          action="monupload"
+          onSubmit={() => this.sendPictures()}
+        >
+          <input type="hidden" name="max_file_size" value="3145728" />
+          <input accept="image/png" type="file" name="monfichier" multiple />
+          <button>Envoyer</button>
         </form>
         <h2>{this.state.flash}</h2>
       </div>
