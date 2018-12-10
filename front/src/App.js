@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import SignUp from "./SignUp";
 
 import "./App.css";
+import FormUploadImage from "./FormUploadImage";
 
 class App extends Component {
   constructor() {
@@ -48,6 +49,7 @@ class App extends Component {
           account={this.state}
           handleSubmit={this.handleSubmit}
         />
+        <FormUploadImage />
       </div>
     );
   }

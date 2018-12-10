@@ -17,6 +17,40 @@ app.use(express.static(__dirname + "/public"));
 app.use(cors());
 
 app.use("/auth", authRouter);
+
+const multer = require("multer");
+const upload = multer({
+  fileFilter: function(req, file, cb) {
+    if (file.mimetype !== "image/png") {
+      return cb(null, false);
+    } else {
+      cb(null, true);
+    }
+  },
+  limits: { fileSize: 3 * 1024 * 1024 },
+  dest: "tmp/"
+});
+
+const fs = require("fs");
+
+app.post("/monupload", upload.array("newFile", 3), function(req, res) {
+  const result = [];
+  req.files.map((file, index) => {
+    fs.rename(
+      file.path,
+      "public/images/" + Date.now() + file.originalname,
+      function(err) {
+        if (err) {
+          console.log(err);
+          res.send("problème durant le déplacement");
+        } else {
+          res.send("Fichier uploadé avec succès");
+        }
+      }
+    );
+  });
+});
+
 // j'implémente la partie API
 app.get("/", (req, res) => {
   res.send("youhou");
