@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { TextField, Button, Snackbar } from "@material-ui/core";
 
 class SignUp extends Component {
   constructor() {
@@ -9,7 +10,8 @@ class SignUp extends Component {
       passwordbis: "monPassw0rd",
       name: "James",
       lastname: "Bond",
-      flash: ""
+      flash: "",
+      open: false
     };
     this.updateEmailField = this.updateEmailField.bind(this);
     this.updatePassword = this.updatePassword.bind(this);
@@ -39,6 +41,18 @@ class SignUp extends Component {
     this.setState({ lastname: event.target.value });
   }
 
+  handleClick = () => {
+    this.setState({
+      open: true
+    });
+  };
+
+  handleRequestClose = () => {
+    this.setState({
+      open: false
+    });
+  };
+
   handleSubmit(event) {
     console.log("A name was submitted: " + JSON.stringify(this.state, 1, 1));
     fetch("/auth/signup", {
@@ -46,26 +60,68 @@ class SignUp extends Component {
       headers: new Headers({
         "Content-Type": "application/json"
       }),
-      body: JSON.stringify(this.state)
+      body: JSON.stringify({
+        email: this.state.email,
+        password: this.state.password,
+        name: this.state.name,
+        lastname: this.state.lastname
+      })
     })
       .then(res => res.json())
       .then(
-        res => this.setState({ flash: res.flash }),
-        err => this.setState({ flash: err.flash })
+        res => this.setState({ flash: res.flash, open: true }),
+        err => this.setState({ flash: err.flash, open: true })
       );
     event.preventDefault();
   }
   render() {
     return (
       <div>
-        <form onSubmit={event => this.handleSubmit(event)}>
-          <h1>{JSON.stringify(this.state, 1, 1)}</h1>{" "}
-          <input onChange={this.updateEmailField} type="email" name="email" />
-          <input onChange={this.updatePassword} type="text" />
-          <input onChange={this.updatePasswordbis} type="text" />
-          <input onChange={this.updateName} type="text" />
-          <input onChange={this.updateLastname} type="text" />
-          <input type="submit" value="Soumettre" />
+        <form onSubmit={this.handleSubmit}>
+          {/* <h1>{JSON.stringify(this.state, 1, 1)}</h1>  */}
+          <h4>E-mail</h4>
+          <TextField
+            onChange={this.updateEmailField}
+            type="email"
+            name="email"
+          />
+          <h4>Password</h4>
+          <TextField
+            onChange={this.updatePassword}
+            type="password"
+            name="password"
+          />
+          <h4>Repeat password</h4>
+          <TextField
+            onChange={this.updatePasswordbis}
+            type="password"
+            name="passwordbis"
+          />
+          <h4>Name</h4>
+          <TextField onChange={this.updateName} type="text" name="name" />
+          <h4>Lastname</h4>
+          <TextField
+            onChange={this.updateLastname}
+            type="text"
+            name="lastname"
+          />
+          <br />
+          <br />
+          <Button
+            color="primary"
+            variant="contained"
+            type="submit"
+            value="Soumettre"
+            onClick={this.handleClick}
+          >
+            Valider
+          </Button>
+          <Snackbar
+            open={this.state.open}
+            message="Vous êtes inscrit !!"
+            autoHideDuration={4000}
+            onRequestClose={this.handleRequestClose}
+          />
         </form>
       </div>
     );
