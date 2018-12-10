@@ -14,20 +14,22 @@ app.post("/uploaddufichier", upload.array("monfichier", 3), function(
   res,
   next
 ) {
+  let Rapport = "";
+
   req.files.map(file =>
-    file.size < 3000000 && file.mimetype.split(".").includes("png")
+    file.size < 3000000 && file.mimetype === "image/png"
       ? fs.rename(file.path, "public/images/" + file.originalname, function(
           err
         ) {
           if (err) {
-            console.log(err);
-            res.send("problème durant le déplacement");
+            Rapport += `Problème lors du déplacement de ${file.originalname}`;
           } else {
-            res.send("Fichier uploadé avec succès");
+            Rapport += `${file.originalname} bien uploadé`;
           }
         })
-      : res.send("Fichier incorrect")
+      : (Rapport += `Mauvais format de fichier pour ${file.originalname}`)
   );
+  res.send(Rapport);
 });
 
 const authRouter = require("./routes/auth/auth");
