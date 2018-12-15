@@ -8,7 +8,7 @@ class FormUpload extends Component {
         encType="multipart/form-data"
         action="uploaddufichier"
       >
-        <input type="file" name="monfichier" />
+        <input type="file" name="monfichier" multiple/>
         <button> envoyer </button>
       </form>
     );
