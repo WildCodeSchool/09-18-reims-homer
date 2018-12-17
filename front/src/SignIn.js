@@ -10,12 +10,33 @@ class SignUp extends Component {
       password: "monPassw0rd"
     };
     this.updateField = this.updateField.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
   updateField(event) {
     let inputName = event.target.name;
     this.setState({
       [inputName]: event.target.value
     });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    fetch("/auth/signin", {
+      method: "POST",
+      headers: new Headers({
+        "Content-Type": "application/json"
+      }),
+      body: JSON.stringify({
+        email: this.state.email,
+        password: this.state.password
+      })
+    })
+      .then(res => res.json())
+      .then(
+        res => this.setState({ flash: res.flash }),
+        err => this.setState({ flash: err.flash })
+      )
+      .then(this.setState({ open: true }));
   }
 
   render() {
@@ -50,11 +71,10 @@ class SignUp extends Component {
               Pas encore inscrit ?
             </Button>
           </Link>
-          <Link to="/profile" variant="contained" color="primary">
-            <Button variant="contained" color="primary">
-              Se connecter
-            </Button>
-          </Link>
+
+          <Button variant="contained" color="primary">
+            Se connecter
+          </Button>
         </form>
       </Fragment>
     );

@@ -61,7 +61,6 @@ class SignUp extends Component {
     this.setState({ open: false });
   };
   render() {
-    const { updateField, state, handleSubmit } = { ...this.props };
     return (
       <Fragment>
         <form
@@ -117,15 +116,14 @@ class SignUp extends Component {
               J'ai un compte !
             </Button>
           </Link>
-          <Link to="/">
-            <Button
-              // onClick={event => this.handleSubmit(event)}
-              variant="contained"
-              color="primary"
-            >
-              Envoyer
-            </Button>
-          </Link>
+
+          <Button
+            onClick={event => this.handleSubmit(event)}
+            variant="contained"
+            color="primary"
+          >
+            Envoyer
+          </Button>
         </form>
         <Snackbar
           anchorOrigin={{

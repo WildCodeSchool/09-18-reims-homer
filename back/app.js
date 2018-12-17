@@ -1,13 +1,17 @@
 // je déclare l'ensemble des librairies nécessaires
 const http = require("http");
 const path = require("path");
+const cors = require("cors");
+const passport = require("passport");
 const express = require("express");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
+
 const app = express();
 const multer = require("multer");
 const upload = multer({ dest: "tmp/" });
 const fs = require("fs");
+app.use(cors());
 
 app.post("/uploaddufichier", upload.array("monfichier", 3), function(
   req,
@@ -35,6 +39,12 @@ app.post("/uploaddufichier", upload.array("monfichier", 3), function(
 const authRouter = require("./routes/auth/auth");
 
 app.use("/auth", authRouter); //où authRouter est issu de l'importation
+app.get("/profile", passport.authenticate("jwt", { session: false }), function(
+  req,
+  res
+) {
+  res.send(req.user);
+});
 
 // je configure l'application
 app.use(morgan("dev"));
