@@ -1,4 +1,22 @@
 import React, { Component } from "react";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import Icon from "@material-ui/core/Icon";
+import Snackbar from "@material-ui/core/Snackbar";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
+
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit
+  },
+  rightIcon: {
+    marginLeft: theme.spacing.unit
+  },
+  container: {
+    display: "flex"
+  }
+});
 
 class SignUp extends Component {
   constructor() {
@@ -10,31 +28,17 @@ class SignUp extends Component {
         name: "",
         lastname: ""
       },
-      flash: ""
+      flash: "",
+      open: false
     };
-    this.updateEmailField = this.updateEmailField.bind(this);
-    this.updatePassword = this.updatePassword.bind(this);
-    this.updateName = this.updateName.bind(this);
-    this.updateLastname = this.updateLastname.bind(this);
+    this.updateField = this.updateField.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
 
-  updateEmailField(event) {
-    this.setState({ auth: { ...this.state.auth, email: event.target.value } });
-  }
-
-  updatePassword(event) {
+  updateField(event) {
     this.setState({
-      auth: { ...this.state.auth, password: event.target.value }
-    });
-  }
-
-  updateName(event) {
-    this.setState({ auth: { ...this.state.auth, name: event.target.value } });
-  }
-
-  updateLastname(event) {
-    this.setState({
-      auth: { ...this.state.auth, lastname: event.target.value }
+      auth: { ...this.state.auth, [event.target.name]: event.target.value }
     });
   }
 
@@ -49,50 +53,93 @@ class SignUp extends Component {
     })
       .then(res => res.json())
       .then(
-        res => this.setState({ flash: res.flash }),
-        err => this.setState({ flash: err.flash })
+        res => this.setState({ flash: res.flash, open: true }),
+        err => this.setState({ flash: err.flash, open: true })
       );
   }
 
-  sendPictures() {
-    fetch("/monupload", {
-      method: "POST",
-      headers: new Headers({
-        "Content-Type": "application/json"
-      })
-    }).then(
-      res => this.setState({ flash: res.flash }),
-      err => this.setState({ flash: err.flash })
-    );
-  }
+  handleClose = () => {
+    this.setState({ open: false });
+  };
 
   render() {
-    const myJSON = JSON.stringify(this.state.auth, 1, 1);
     return (
       <div>
-        <form onSubmit={event => this.handleSubmit(event)}>
-          <h1>{myJSON}</h1>
-          <input onChange={this.updateEmailField} type="email" name="email" />
-          <br />
-          <input onChange={this.updatePassword} type="text" />
-          <br />
-          <input onChange={this.updateName} type="text" />
-          <br />
-          <input onChange={this.updateLastname} type="text" />
-          <br />
-          <input type="submit" value="Soumettre" />
-        </form>
         <form
-          method="POST"
-          enctype="multipart/form-data"
-          action="monupload"
-          onSubmit={() => this.sendPictures()}
+          className={styles.container}
+          onSubmit={event => this.handleSubmit(event)}
         >
-          <input type="hidden" name="max_file_size" value="3145728" />
-          <input accept="image/png" type="file" name="monfichier" multiple />
-          <button>Envoyer</button>
+          <h1>Sign up !</h1>
+          <TextField
+            onChange={this.updateField}
+            type="email"
+            name="email"
+            placeholder="Email"
+            label="Email"
+            required
+          />
+          <br />
+          <TextField
+            onChange={this.updateField}
+            type="password"
+            placeholder="Password"
+            label="Password"
+            name="password"
+            required
+          />
+          <br />
+          <TextField
+            onChange={this.updateField}
+            type="text"
+            placeholder="Name"
+            label="Name"
+            name="name"
+            required
+          />
+          <br />
+          <TextField
+            onChange={this.updateField}
+            type="text"
+            placeholder="Lastname"
+            label="Lastname"
+            name="lastname"
+            required
+          />
+          <br />
+          <Button
+            variant="contained"
+            color="primary"
+            className={styles.button}
+            type="submit"
+            style={{ marginTop: 20 }}
+          >
+            Send
+            <Icon className={styles.rightIcon}>send</Icon>
+          </Button>
         </form>
-        <h2>{this.state.flash}</h2>
+        <Snackbar
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "center"
+          }}
+          open={this.state.open}
+          autoHideDuration={6000}
+          onClose={this.handleClose}
+          ContentProps={{
+            "aria-describedby": "message-id"
+          }}
+          message={<span id="message-id">{this.state.flash}</span>}
+          action={[
+            <IconButton
+              key="close"
+              aria-label="Close"
+              color="inherit"
+              onClick={this.handleClose}
+            >
+              <CloseIcon />
+            </IconButton>
+          ]}
+        />
       </div>
     );
   }
