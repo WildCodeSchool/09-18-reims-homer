@@ -9,15 +9,13 @@ import styles from "@material-ui/core/styles";
 import { withStyles } from "@material-ui/core/styles";
 import Snackbar from "@material-ui/core/Snackbar";
 
-class SignUp extends Component {
+class SignIn extends Component {
   constructor(props) {
     super(props);
     this.state = {
       auth: {
         email: "mon@email.com",
-        password: "monPassw0rd",
-        name: "James",
-        lastname: "Bond"
+        password: "monPassw0rd"
       },
       flash: "Vous êtes inscrit !",
       open: false
@@ -34,9 +32,9 @@ class SignUp extends Component {
       auth: { ...this.state.auth, password: event.target.value }
     });
   }
-  onChangeUpdatenameField(event) {
+  onChangeUpdateFirstnameField(event) {
     this.setState({
-      auth: { ...this.state.auth, name: event.target.value }
+      auth: { ...this.state.auth, firstname: event.target.value }
     });
   }
   onChangeUpdateLastnameField(event) {
@@ -50,7 +48,7 @@ class SignUp extends Component {
       "A name was submitted: " + JSON.stringify(this.state.auth, 1, 1)
     );
     event.preventDefault();
-    fetch("/auth/signup", {
+    fetch("/auth/signin", {
       method: "POST",
       headers: new Headers({
         "Content-Type": "application/json"
@@ -81,11 +79,11 @@ class SignUp extends Component {
       <div>
         <Row>
           <Link
-            to="/signin"
+            to="/signup"
             className="previousPage py-0 px-3 d-inline-block text-white"
           >
             <i className="fas pr-2 fa-angle-left" />
-            Go to sign in !
+            Go to sign up !
             <Button />
           </Link>
         </Row>
@@ -112,29 +110,7 @@ class SignUp extends Component {
               margin="normal"
             />
           </Row>
-          <Row>
-            <TextField
-              onChange={this.onChangeUpdatenameField.bind(this)}
-              id="standard-name-input"
-              label="name"
-              name="name"
-              type="name"
-              autoComplete="current-name"
-              margin="normal"
-            />
-          </Row>
-          <Row>
-            <TextField
-              onChange={this.onChangeUpdateLastnameField.bind(this)}
-              id="standard-lastname-input"
-              label="Lastname"
-              name="lastname"
-              type="lastname"
-              autoComplete="current-lastname"
-              margin="normal"
-            />
-          </Row>
-          <Link to="/">
+          <Link to="/profile">
             <Button
               variant="contained"
               color="primary"
@@ -159,8 +135,8 @@ class SignUp extends Component {
   }
 }
 
-SignUp.propTypes = {
+SignIn.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(SignUp);
+export default withStyles(styles)(SignIn);
