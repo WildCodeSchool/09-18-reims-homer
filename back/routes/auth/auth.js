@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const jwt = require("jsonwebtoken");
 require("../../passport-strategie");
 const connection = require("../../helpers/db.js");
 const passport = require("passport");
@@ -18,7 +19,8 @@ router.post("/signin", function(req, res, next) {
   passport.authenticate("local", (err, user, info) => {
     if (err) return res.status(500).send(err);
     if (!user) return res.status(400).json({ message: info.message });
-    return res.json({ user });
+    const token = jwt.sign(user, "your_jwt_secret");
+    return res.json({ user, token });
   })(req, res);
 });
 
