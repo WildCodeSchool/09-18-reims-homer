@@ -1,16 +1,13 @@
+import { Link } from "react-router-dom";
 import React, { Component } from "react";
 import { TextField, Button, Snackbar } from "@material-ui/core";
-import { Link } from "react-router-dom";
 
-class SignUp extends Component {
+class SignIn extends Component {
   constructor() {
     super();
     this.state = {
       email: "mon@email.com",
       password: "monPassw0rd",
-      passwordbis: "monPassw0rd",
-      name: "James",
-      lastname: "Bond",
       flash: "",
       open: false
     };
@@ -56,7 +53,7 @@ class SignUp extends Component {
 
   handleSubmit(event) {
     console.log("A name was submitted: " + JSON.stringify(this.state, 1, 1));
-    fetch("/auth/signup", {
+    fetch("/auth/signin", {
       method: "POST",
       headers: new Headers({
         "Content-Type": "application/json"
@@ -92,23 +89,9 @@ class SignUp extends Component {
             type="password"
             name="password"
           />
-          <h4>Repeat password</h4>
-          <TextField
-            onChange={this.updatePasswordbis}
-            type="password"
-            name="passwordbis"
-          />
-          <h4>Name</h4>
-          <TextField onChange={this.updateName} type="text" name="name" />
-          <h4>Lastname</h4>
-          <TextField
-            onChange={this.updateLastname}
-            type="text"
-            name="lastname"
-          />
           <br />
           <br />
-          <Link to="/">
+          <Link to="/profile">
             <Button
               color="primary"
               variant="contained"
@@ -119,9 +102,14 @@ class SignUp extends Component {
               Valider
             </Button>
           </Link>
+          <br />
+          <br />
+          <Link to="/signUp">
+            Si vous n'avez pas de compte, inscrivez vous ici !!
+          </Link>
           <Snackbar
             open={this.state.open}
-            message="Vous êtes inscrit !!"
+            message="Vous êtes identifié !!"
             autoHideDuration={4000}
             onRequestClose={this.handleRequestClose}
           />
@@ -131,4 +119,4 @@ class SignUp extends Component {
   }
 }
 
-export default SignUp;
+export default SignIn;
