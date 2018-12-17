@@ -7,6 +7,9 @@ const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const app = express();
 const authRouter = require("./routes/auth/auth");
+const passport = require("passport");
+
+require("./helpers/passport-strategy");
 
 // je configure l'application
 app.use(morgan("dev"));
@@ -17,7 +20,12 @@ app.use(express.static(__dirname + "/public"));
 app.use(cors());
 
 app.use("/auth", authRouter);
-
+app.get("/profile", passport.authenticate("jwt", { session: false }), function(
+  req,
+  res
+) {
+  res.send(req.user);
+});
 const multer = require("multer");
 const upload = multer({
   fileFilter: function(req, file, cb) {
