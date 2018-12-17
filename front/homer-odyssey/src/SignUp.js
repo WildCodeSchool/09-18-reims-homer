@@ -1,4 +1,16 @@
 import React, { Component } from "react";
+import { TextField, Button } from "@material-ui/core";
+import Snackbar from "@material-ui/core/Snackbar";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+
+const styles = theme => ({
+  close: {
+    padding: theme.spacing.unit / 2,
+  },
+});
 
 class SignUp extends Component {
   constructor(props) {
@@ -8,7 +20,8 @@ class SignUp extends Component {
       password: "",
       passwordBis: "",
       name: "",
-      lastname: ""
+      lastname: "",
+      open: false
     };
     this.updateNameField = this.updateNameField.bind(this);
     this.updateLastnameField = this.updateLastnameField.bind(this);
@@ -16,6 +29,7 @@ class SignUp extends Component {
     this.updatePasswordBisField = this.updatePasswordBisField.bind(this);
     this.updateEmailField = this.updateEmailField.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
   updateNameField(event) {
     this.setState({ name: event.target.value });
@@ -50,36 +64,113 @@ class SignUp extends Component {
     })
       .then(res => res.json())
       .then(
-        res => this.setState({ flash: res.flash }),
-        err => this.setState({ flash: err.flash })
+        res => {
+          this.setState({ flash: res.flash, open: true });
+        },
+        err => {
+          this.setState({ flash: err.flash, open: true });
+        }
       );
     event.preventDefault();
   }
+  handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    this.setState({ open: false });
+  };
   render() {
+    const { classes } = this.props;
     return (
-      <form onSubmit={this.handleSubmit}>
-        <h1>{JSON.stringify(this.state, 1, 1)}</h1>
-        <input type="name" name="name" onChange={this.updateNameField} />
-        <input
-          type="lastname"
-          name="lastname"
-          onChange={this.updateLastnameField}
+      <form
+        onSubmit={this.handleSubmit}
+        style={{ textAlign: "left", margin: "5%" }}
+      >
+        <p style={{ fontWeight: "bold" }}>Sign up !</p>
+        <TextField
+          type="email"
+          name="email"
+          label="Email"
+          onChange={this.updateEmailField}
+          fullWidth
         />
-        <input
+        <TextField
           type="password"
           name="password"
+          label="Password"
           onChange={this.updatePasswordField}
+          fullWidth
         />
-        <input
+        <TextField
           type="password"
           name="passwordBis"
+          label="Confirm password"
           onChange={this.updatePasswordBisField}
+          fullWidth
         />
-        <input type="email" name="email" onChange={this.updateEmailField} />
-        <input type="submit" value="Soumettre" />
+        <TextField
+          type="name"
+          name="name"
+          label="Name"
+          onChange={this.updateNameField}
+          fullWidth
+        />
+        <TextField
+          type="lastname"
+          name="lastname"
+          label="Lastname"
+          onChange={this.updateLastnameField}
+          fullWidth
+        />
+        <div style={{ textAlign: "right", margin: "5%" }}>
+          <Button
+            type="submit"
+            variant="contained"
+            value="Soumettre"
+            color="primary"
+          >
+            SUBMIT
+          </Button>
+        </div>
+        <Snackbar
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "center"
+          }}
+          open={this.state.open}
+          autoHideDuration={6000}
+          onClose={this.handleClose}
+          ContentProps={{
+            "aria-describedby": "message-id"
+          }}
+          message={<span id="message-id">{this.state.flash === "User has been signed up !" ? this.state.flash : "An error occurred..."}</span>}
+          action={[
+            <Button
+              key="undo"
+              color="secondary"
+              size="small"
+              onClick={this.handleClose}
+            >
+              UNDO
+            </Button>,
+            <IconButton
+              key="close"
+              aria-label="Close"
+              color="inherit"
+              className={classes.close}
+              onClick={this.handleClose}
+            >
+              <CloseIcon />
+            </IconButton>
+          ]}
+        />
       </form>
     );
   }
 }
 
-export default SignUp;
+SignUp.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(SignUp);

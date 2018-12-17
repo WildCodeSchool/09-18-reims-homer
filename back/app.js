@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const app = express();
 const authRouter = require("./routes/auth/auth");
-const uploadRouter = require("./routes/upload/upload");
+// const uploadRouter = require("./routes/upload/upload");
 
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -17,7 +17,7 @@ app.get("/", (req, res) => {
 
 app.use("/auth", authRouter);
 
-app.use("", uploadRouter);
+// app.use("", uploadRouter);
 
 app.use(function(req, res, next) {
   var err = new Error("Not Found");
