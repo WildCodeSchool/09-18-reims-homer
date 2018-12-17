@@ -6,52 +6,46 @@ import CloseIcon from "@material-ui/icons/Close";
 import Button from "@material-ui/core/Button";
 import { Link, withRouter } from "react-router-dom";
 
-class SignUp extends Component {
+class SignIn extends Component {
   constructor(props) {
     super(props);
     this.state = {
       email: "",
-      password: "",
       firstname: "",
       lastname: "",
-      confirmPassword: "",
+      password: "",
       flash: "",
       openFlash: false
     };
 
-    this.handleSubmitSignUp = this.handleSubmitSignUp.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   updateFormField = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  handleSubmitSignUp(e) {
+  handleSubmit(e) {
     e.preventDefault();
-    if (this.state.password === this.state.confirmPassword) {
-      fetch("/auth/signup", {
-        method: "POST",
-        headers: new Headers({
-          "Content-Type": "application/json"
-        }),
-        body: JSON.stringify({
-          email: this.state.email,
-          password: this.state.password,
-          firstname: this.state.firstname,
-          lastname: this.state.lastname
-        })
+
+    fetch("/auth/signin", {
+      method: "POST",
+      headers: new Headers({
+        "Content-Type": "application/json"
+      }),
+      body: JSON.stringify({
+        email: this.state.email,
+        password: this.state.password
       })
-        .then(res => res.json())
-        .then(res =>
-          this.setState({ flash: res.flash, open: true }, () => {
-            if (res.type === "success") {
-              this.props.history.push("/");
-            }
-          })
-        );
-    } else {
-      alert("Passwords don't match!!!!!");
-    }
+    })
+      .then(res => res.json())
+      .then(res =>
+        this.setState({ flash: res.flash, open: true }, () => {
+          if (res.type === "success") {
+            this.props.history.push("profile");
+          }
+        })
+      );
   }
 
   handleClose = (event, reason) => {
@@ -65,7 +59,7 @@ class SignUp extends Component {
   render() {
     return (
       <form>
-        <p>Inscription</p>
+        <p>Connexion</p>
         <TextField
           value={this.state.email}
           type="email"
@@ -79,31 +73,7 @@ class SignUp extends Component {
           name="password"
           placeholder="Your password"
           value={this.state.password}
-          onChange={event => this.updateFormField(event)}
-        />
-
-        <TextField
-          type="password"
-          name="confirmPassword"
-          placeholder="Confirm your password"
-          value={this.state.confirmPassword}
-          onChange={event => this.updateFormField(event)}
-        />
-
-        <TextField
-          type="firstname"
-          name="firstname"
-          placeholder="Your firstname"
-          value={this.state.firstname}
-          onChange={event => this.updateFormField(event)}
-        />
-
-        <TextField
-          type="lastname"
-          name="lastname"
-          placeholder="Your lastname"
-          value={this.state.lastname}
-          onChange={event => this.updateFormField(event)}
+          onChange={this.updateFormField}
         />
         <hr />
         <Button
@@ -111,14 +81,14 @@ class SignUp extends Component {
           variant="contained"
           type="submit"
           value="Soumettre"
-          onClick={e => this.handleSubmitSignUp(e)}
+          onClick={e => this.handleSubmit(e)}
         >
-          S'inscrire
+          Soumettre
         </Button>
 
         <hr />
-        <Link to="/signin">
-          <Button>Dèjà inscrit ?</Button>
+        <Link to="/signup">
+          <Button>Inscris toi !</Button>
         </Link>
         <Snackbar
           anchorOrigin={{
@@ -148,4 +118,4 @@ class SignUp extends Component {
   }
 }
 
-export default withRouter(SignUp);
+export default withRouter(SignIn);
