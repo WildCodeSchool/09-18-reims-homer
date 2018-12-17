@@ -24,8 +24,9 @@ class App extends Component {
                   <Grid item xs={12} sm={6}>
                     <BrowserRouter>
                       <Switch>
+                        <Route exact path="/" component={SignIn} />
                         <Route path="/signup" component={SignUp} />
-                        <Route path="/signin" component={SignIn} />
+                        <Route exact path="/signin" component={SignIn} />
                         <Route path="/profile" component={Profile} />
                       </Switch>
                     </BrowserRouter>
