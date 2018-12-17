@@ -14,7 +14,7 @@ export class FlashMessage extends Component {
           }}
           open={this.props.openFlashMessage}
           autoHideDuration={6000}
-          onClose={this.props.handleClose}
+          onClose={this.props.handleCloseFlashMessage}
           ContentProps={{
             "aria-describedby": "message-id"
           }}

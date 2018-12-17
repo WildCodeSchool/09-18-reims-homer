@@ -34,8 +34,7 @@ const upload = multer({
 const fs = require("fs");
 
 app.post("/monupload", upload.array("newFile", 3), function(req, res) {
-  const result = [];
-  req.files.map((file, index) => {
+  req.files.map(file => {
     fs.rename(
       file.path,
       "public/images/" + Date.now() + file.originalname,
