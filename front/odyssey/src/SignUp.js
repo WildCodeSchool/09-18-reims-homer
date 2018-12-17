@@ -1,15 +1,22 @@
 import React, { Component } from "react";
 import { Row } from "reactstrap";
 import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Icon from "@material-ui/core/Icon";
-import styles from "@material-ui/core/styles";
-import { withStyles } from "@material-ui/core/styles";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
 import Snackbar from "@material-ui/core/Snackbar";
 
 class SignUp extends Component {
+  handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    this.setState({ open: false });
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -59,22 +66,10 @@ class SignUp extends Component {
     })
       .then(res => res.json())
       .then(
-        res => this.setState({ flash: res.flash }),
-        err => this.setState({ flash: err.flash })
+        res => this.setState({ flash: res.flash, open: true }),
+        err => this.setState({ flash: err.flash, open: true })
       );
   }
-
-  handleClick = () => {
-    this.setState({
-      open: true
-    });
-  };
-
-  handleRequestClose = () => {
-    this.setState({
-      open: false
-    });
-  };
 
   render() {
     return (
@@ -153,14 +148,41 @@ class SignUp extends Component {
             }}
             message={<span id="message-id">{this.state.flash}</span>}
           />
+          <Snackbar
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "left"
+            }}
+            open={this.state.open}
+            autoHideDuration={6000}
+            onClose={this.handleClose}
+            ContentProps={{
+              "aria-describedby": "message-id"
+            }}
+            message={<span id="message-id">Note archived</span>}
+            action={[
+              <Button
+                key="undo"
+                color="secondary"
+                size="small"
+                onClick={this.handleClose}
+              >
+                UNDO
+              </Button>,
+              <IconButton
+                key="close"
+                aria-label="Close"
+                color="inherit"
+                onClick={this.handleClose}
+              >
+                <CloseIcon />
+              </IconButton>
+            ]}
+          />
         </form>
       </div>
     );
   }
 }
 
-SignUp.propTypes = {
-  classes: PropTypes.object.isRequired
-};
-
-export default withStyles(styles)(SignUp);
+export default SignUp;
