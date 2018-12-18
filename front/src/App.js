@@ -3,8 +3,11 @@ import "./App.css";
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import SignUp from "./SignUp";
+import SignIn from "./SignIn";
+import Profile from "./Profile";
 
 class App extends Component {
   render() {
@@ -38,7 +41,14 @@ class App extends Component {
                   justify="center"
                   style={{ textAlign: "center" }}
                 >
-                  <SignUp />
+                  <BrowserRouter>
+                    <Switch>
+                      <Route exact path="/" component={SignIn} />
+                      <Route path="/signup" component={SignUp} />
+                      <Route path="/signin" component={SignIn} />
+                      <Route path="/profile" component={Profile} />
+                    </Switch>
+                  </BrowserRouter>
                 </Grid>
               </Grid>
             </Paper>

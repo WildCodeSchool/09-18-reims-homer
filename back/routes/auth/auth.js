@@ -13,9 +13,26 @@ router.post("/signup", (req, res, next) => {
     if (err) {
       res.status(500).json({ flash: err.message });
     } else {
-      res.status(200).json({ flash: "User has been signed up !" });
+      res
+        .status(200)
+        .json({ flash: "User has been signed up !", type: "success" });
     }
   });
+});
+
+router.post("/signin", (req, res, next) => {
+  const formData = req.body;
+  connection.query(
+    "SELECT * FROM users WHERE email = ? AND password = ?",
+    [data.mail, data.password],
+    (err, reults) => {
+      if (err) {
+        res.status(500).json({ flash: err.message });
+      } else {
+        res.status(200).json({ flash: "User connected", type: "success" });
+      }
+    }
+  );
 });
 
 module.exports = router;

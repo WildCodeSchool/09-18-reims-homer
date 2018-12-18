@@ -19,15 +19,13 @@ const styles = theme => ({
   }
 });
 
-class SignUp extends Component {
+class SignIn extends Component {
   constructor() {
     super();
     this.state = {
       auth: {
         email: "",
-        password: "",
-        name: "",
-        lastname: ""
+        password: ""
       },
       flash: "",
       open: false
@@ -45,7 +43,7 @@ class SignUp extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    fetch("/auth/signup", {
+    fetch("/auth/signin", {
       method: "POST",
       headers: new Headers({
         "Content-Type": "application/json"
@@ -56,7 +54,7 @@ class SignUp extends Component {
       .then(res =>
         this.setState({ flash: res.flash, open: true }, () => {
           if (res.type === "success") {
-            this.props.history.push("/signin");
+            this.props.history.push("/profile");
           }
         })
       );
@@ -69,12 +67,9 @@ class SignUp extends Component {
   render() {
     return (
       <div>
-        <form
-          className={styles.container}
-          onSubmit={event => this.handleSubmit(event)}
-        >
-          <Link to="/signin">
-            <h1>To Sign in !</h1>
+        <form className={styles.container}>
+          <Link to="/signup">
+            <h1>To Sign up !</h1>
           </Link>
           <TextField
             onChange={this.updateField}
@@ -94,25 +89,7 @@ class SignUp extends Component {
             required
           />
           <br />
-          <TextField
-            onChange={this.updateField}
-            type="text"
-            placeholder="Name"
-            label="Name"
-            name="name"
-            required
-          />
-          <br />
-          <TextField
-            onChange={this.updateField}
-            type="text"
-            placeholder="Lastname"
-            label="Lastname"
-            name="lastname"
-            required
-          />
-          <br />
-          <Link to="/signin">
+          <Link to="/profile">
             <Button
               variant="contained"
               color="primary"
@@ -153,4 +130,4 @@ class SignUp extends Component {
   }
 }
 
-export default withRouter(SignUp);
+export default withRouter(SignIn);
