@@ -1,8 +1,11 @@
 import React, { Component } from "react";
+import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 // import FormUpload from "./FormUpload";
 import { Grid, Paper } from "@material-ui/core";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
+import Profile from "./Profile";
 
 class App extends Component {
   render() {
@@ -20,7 +23,13 @@ class App extends Component {
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
-                    <SignUp />
+                    <Router>
+                      <Switch>
+                        <Route exact path="/(|signin)" component={SignIn} />
+                        <Route path="/signup" component={SignUp} />
+                        <Route path="/profile" component={Profile} />
+                      </Switch>
+                    </Router>
                   </Grid>
                 </Grid>
               </Paper>

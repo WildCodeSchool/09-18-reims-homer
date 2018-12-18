@@ -13,52 +13,35 @@ const styles = theme => ({
   }
 });
 
-class SignUp extends Component {
+class SignIn extends Component {
   constructor(props) {
     super(props);
     this.state = {
       email: "",
       password: "",
-      passwordBis: "",
-      name: "",
-      lastname: "",
       open: false
     };
-    this.updateNameField = this.updateNameField.bind(this);
-    this.updateLastnameField = this.updateLastnameField.bind(this);
     this.updatePasswordField = this.updatePasswordField.bind(this);
-    this.updatePasswordBisField = this.updatePasswordBisField.bind(this);
     this.updateEmailField = this.updateEmailField.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleClose = this.handleClose.bind(this);
   }
-  updateNameField(event) {
-    this.setState({ name: event.target.value });
-  }
-  updateLastnameField(event) {
-    this.setState({ lastname: event.target.value });
-  }
   updatePasswordField(event) {
     this.setState({ password: event.target.value });
-  }
-  updatePasswordBisField(event) {
-    this.setState({ passwordBis: event.target.value });
   }
   updateEmailField(event) {
     this.setState({ email: event.target.value });
   }
   handleSubmit(event) {
     console.log(
-      `A name has been submitted :${JSON.stringify(this.state, 1, 1)}`
+      `An email has been submitted :${JSON.stringify(this.state, 1, 1)}`
     );
-    fetch("/auth/signup", {
+    fetch("/auth/signin", {
       method: "POST",
       headers: new Headers({
         "Content-Type": "application/json"
       }),
       body: JSON.stringify({
-        name: this.state.name,
-        lastname: this.state.lastname,
         password: this.state.password,
         email: this.state.email
       })
@@ -87,7 +70,7 @@ class SignUp extends Component {
         onSubmit={this.handleSubmit}
         style={{ textAlign: "left", margin: "5%" }}
       >
-        <p style={{ fontWeight: "bold" }}>Sign up !</p>
+        <p style={{ fontWeight: "bold" }}>Sign in !</p>
         <TextField
           type="email"
           name="email"
@@ -102,34 +85,13 @@ class SignUp extends Component {
           onChange={this.updatePasswordField}
           fullWidth
         />
-        <TextField
-          type="password"
-          name="passwordBis"
-          label="Confirm password"
-          onChange={this.updatePasswordBisField}
-          fullWidth
-        />
-        <TextField
-          type="name"
-          name="name"
-          label="Name"
-          onChange={this.updateNameField}
-          fullWidth
-        />
-        <TextField
-          type="lastname"
-          name="lastname"
-          label="Lastname"
-          onChange={this.updateLastnameField}
-          fullWidth
-        />
         <div style={{ textAlign: "right", margin: "5%" }}>
-          <Link to="/signin">
+          <Link to="/signup">
             <Button variant="contained" color="primary">
-              Registered already ?
+              Not an user yet ?
             </Button>
           </Link>
-          <Link to="/">
+          <Link to="/profile">
             <Button
               type="submit"
               variant="contained"
@@ -153,7 +115,7 @@ class SignUp extends Component {
           }}
           message={
             <span id="message-id">
-              {this.state.flash === "User has been signed up !"
+              {this.state.flash === "User has been signed in !"
                 ? this.state.flash
                 : "An error occurred..."}
             </span>
@@ -183,8 +145,8 @@ class SignUp extends Component {
   }
 }
 
-SignUp.propTypes = {
+SignIn.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(SignUp);
+export default withStyles(styles)(SignIn);
