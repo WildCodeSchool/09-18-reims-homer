@@ -129,7 +129,7 @@ class SignUp extends Component {
               Registered already ?
             </Button>
           </Link>
-          <Link to="/">
+          {/* <Link to="/"> */}
             <Button
               type="submit"
               variant="contained"
@@ -138,7 +138,7 @@ class SignUp extends Component {
             >
               SUBMIT
             </Button>
-          </Link>
+          {/* </Link> */}
         </div>
         <Snackbar
           anchorOrigin={{

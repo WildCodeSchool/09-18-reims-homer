@@ -8,11 +8,16 @@
   },
   "author": "wilder",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.2",
     "dotenv": "^6.2.0",
     "express": "^4.16.3",
+    "jsonwebtoken": "^8.4.0",
     "morgan": "^1.9.0",
     "multer": "^1.4.1",
-    "mysql": "^2.16.0"
+    "mysql": "^2.16.0",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0"
   }
 }

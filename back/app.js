@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const app = express();
 const authRouter = require("./routes/auth/auth");
+const passport = require("passport");
 // const uploadRouter = require("./routes/upload/upload");
 
 app.use(morgan("dev"));
@@ -16,6 +17,13 @@ app.get("/", (req, res) => {
 });
 
 app.use("/auth", authRouter);
+
+app.get("/profile", passport.authenticate("jwt", { session: false }), function(
+  req,
+  res
+) {
+  res.send(req.user);
+});
 
 // app.use("", uploadRouter);
 

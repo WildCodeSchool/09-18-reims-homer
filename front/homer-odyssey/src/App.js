@@ -27,7 +27,8 @@ class App extends Component {
                       <Switch>
                         <Route exact path="/(|signin)" component={SignIn} />
                         <Route path="/signup" component={SignUp} />
-                        <Route path="/profile" component={Profile} />
+                        <Route path="/profile" component={Profile} />                     
+                        {/* ex for props sending : <Route path="/profile" render={() => <Profile props-here />}/> */}
                       </Switch>
                     </Router>
                   </Grid>
